@@ -1,0 +1,46 @@
+{
+  "name": "cas-server-pg-registries",
+  "version": "0.1.0",
+  "description": "Service and ticket registries backed by PostgreSQL",
+  "main": "registries.js",
+  "scripts": {
+    "test": "tap --no-cov 'test/**/*.test.js'",
+    "lint": "standard",
+    "schema-install": "node ./lib/schemaInstaller"
+  },
+  "precommit": [
+    "lint",
+    "test"
+  ],
+  "bin": {
+    "pg-registries-install-schema": "./bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jscas/cas-server-pg-registries.git"
+  },
+  "keywords": [
+    "jscas",
+    "cas"
+  ],
+  "author": "James Sumners <james.sumners@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jscas/cas-server-pg-registries/issues"
+  },
+  "homepage": "https://github.com/jscas/cas-server-pg-registries#readme",
+  "dependencies": {
+    "cloob": "^1.0.0",
+    "inquirer": "^2.0.0",
+    "js-joda": "^1.1.17",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "bluebird": "^3.4.7",
+    "bluebird-co": "^2.2.0",
+    "pino": "^3.0.5",
+    "pre-commit": "^1.2.2",
+    "standard": "^8.6.0",
+    "tap": "^8.0.1"
+  }
+}
