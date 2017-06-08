@@ -38,6 +38,16 @@ The schema installer will prompt you for connection details to your database.
 Other than the username and password, some defaults will be provided that you
 can simply accept (press "enter") if they match your environment.
 
+Alternatively,the schema installer can be run with the following environment
+variables set to skip the questions:
+
++ `DB_USERNAME`: required
++ `DB_NAME`: required
++ `DB_HOST`: required
++ `DB_PORT`: required
++ `DB_PASSWORD`: this one is optional. If not supplied, `peer` authentication
+will be used.
+
 **Note:** if you have installed this module in a directory other than your
 `cas-server` install directory then you will need to explicitly install the
 `pg` module: `npm install pg`. This module's schema installer requires a direct
