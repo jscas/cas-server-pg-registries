@@ -1,6 +1,6 @@
 {
   "name": "cas-server-pg-registries",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Service and ticket registries backed by PostgreSQL",
   "main": "registries.js",
   "scripts": {
