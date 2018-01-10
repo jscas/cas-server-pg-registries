@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('../nullLogger')
 
 const tables = require('../../lib/tableNames')
 const trPath = require.resolve('../../lib/ticketRegistry')
@@ -17,8 +15,8 @@ test('#genST fails if no tgt found', (t) => {
       }
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
-  tr.genST(1, new Date(), 1)
+  const tr = require(trPath)(pool, log)
+  tr.genST(1, 1, new Date())
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'invalid ticket id'))
 })
@@ -32,8 +30,8 @@ test('#genST fails tgt marked invalid', (t) => {
       }
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
-  tr.genST(1, new Date(), 1)
+  const tr = require(trPath)(pool, log)
+  tr.genST(1, 1, new Date())
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'requested ticket is invalid'))
 })
@@ -48,8 +46,8 @@ test('#genST fails if tgt expired', (t) => {
       return {}
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
-  tr.genST(1, new Date(), 1)
+  const tr = require(trPath)(pool, log)
+  tr.genST(1, 1, new Date())
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'requested ticket has expired'))
 })
@@ -73,8 +71,8 @@ test('#genST succeeds', (t) => {
       return {}
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
-  tr.genST(1, null, 1)
+  const tr = require(trPath)(pool, log)
+  tr.genST(1, 1)
     .then((st) => {
       t.is(st.tid.startsWith('ST-'), true)
       t.is(st.created < new Date(Date.now() + 300), true)

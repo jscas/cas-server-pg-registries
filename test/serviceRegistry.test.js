@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('./nullLogger')
 
 const srPath = require.resolve('../lib/serviceRegistry')
 
@@ -14,7 +12,7 @@ test('#getServiceWithName should error when 0 found', (t) => {
       return {rows: []}
     }
   }
-  const sr = require(srPath)(pool, log, Promise)
+  const sr = require(srPath)(pool, log)
   sr.getServiceWithName('foo')
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'no service found'))
@@ -25,7 +23,7 @@ test('#getServiceWithName should fail when query throws', (t) => {
   const pool = {
     query () { throw new Error('failed') }
   }
-  const sr = require(srPath)(pool, log, Promise)
+  const sr = require(srPath)(pool, log)
   sr.getServiceWithName('foo')
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'failed'))
@@ -45,7 +43,7 @@ test('#getServiceWithName should succeed for found service', (t) => {
       }
     }
   }
-  const sr = require(srPath)(pool, log, Promise)
+  const sr = require(srPath)(pool, log)
   sr.getServiceWithName('foo')
     .then((service) => {
       t.is(service.id, 1)
@@ -63,7 +61,7 @@ test('#getServiceWithUrl should error when 0 found', (t) => {
       return {rows: []}
     }
   }
-  const sr = require(srPath)(pool, log, Promise)
+  const sr = require(srPath)(pool, log)
   sr.getServiceWithUrl('example.com')
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'unknown service: example.com'))
@@ -74,7 +72,7 @@ test('#getServiceWithUrl should fail when query throws', (t) => {
   const pool = {
     query () { throw new Error('failed') }
   }
-  const sr = require(srPath)(pool, log, Promise)
+  const sr = require(srPath)(pool, log)
   sr.getServiceWithUrl('example.com')
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'failed'))
@@ -94,7 +92,7 @@ test('#getServiceWithUrl should succeed for found service', (t) => {
       }
     }
   }
-  const sr = require(srPath)(pool, log, Promise)
+  const sr = require(srPath)(pool, log)
   sr.getServiceWithUrl('example.com')
     .then((service) => {
       t.is(service.id, 1)
@@ -107,7 +105,7 @@ test('#getServiceWithUrl should succeed for found service', (t) => {
 
 test('#close succeeds', (t) => {
   t.plan(1)
-  const sr = require(srPath)({}, log, Promise)
+  const sr = require(srPath)({}, log)
   sr.close()
     .then(() => t.pass())
     .catch((err) => t.threw(err))

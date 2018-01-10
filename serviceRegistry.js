@@ -1,12 +1,12 @@
 'use strict'
 
-const registry = require('./lib/serviceRegistry')
+const fp = require('fp')
+const registryFactory = require('./lib/serviceRegistry')
 
-module.exports.name = 'pgServiceRegistry'
-module.exports.plugin = function plugin (conf, context) {
-  return registry(
-    context.dataSources.postgres,
-    context.logger.child({plugin: 'pgServiceRegistry'}),
-    context.Promise
-  )
-}
+module.exports = fp(function serviceRegistryPlugin (server, options, next) {
+  const registry = registryFactory(server.pg, server.log)
+  server.registerServiceRegistry(registry)
+  next()
+})
+
+module.exports.pluginName = 'pgServiceRegistry'

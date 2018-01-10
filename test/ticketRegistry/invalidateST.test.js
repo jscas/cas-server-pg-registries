@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('../nullLogger')
 
 const trPath = require.resolve('../../lib/ticketRegistry')
 
@@ -12,7 +10,7 @@ test('#invalidateST return error on exception', (t) => {
   const pool = {
     query () { throw new Error('failed') }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.invalidateST(1)
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'failed'))
@@ -36,7 +34,7 @@ test('#invalidateST returns st on success', (t) => {
       }
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.invalidateST(1)
     .then((st) => {
       t.is(st.tid, 1)

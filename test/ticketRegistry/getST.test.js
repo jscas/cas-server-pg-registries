@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('../nullLogger')
 
 const trPath = require.resolve('../../lib/ticketRegistry')
 
@@ -12,7 +10,7 @@ test('#getST returns error for none found', (t) => {
   const pool = {
     query () { return {rows: []} }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.getST(1)
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'could not find service ticket'))
@@ -36,7 +34,7 @@ test('#getST returns st when found', (t) => {
       }
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.getST(1)
     .then((st) => {
       t.is(st.tid, 1)

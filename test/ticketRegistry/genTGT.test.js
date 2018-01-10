@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('../nullLogger')
 
 const trPath = require.resolve('../../lib/ticketRegistry')
 
@@ -12,7 +10,7 @@ test('#genTGT fails if query throws', (t) => {
   const pool = {
     query () { throw new Error('failed') }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.genTGT('foo', new Date())
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'failed'))
@@ -31,7 +29,7 @@ test('#genTGT succeeds', (t) => {
       }
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.genTGT('foo', null)
     .then((tgt) => {
       t.is(tgt.tid.startsWith('TGT-'), true)

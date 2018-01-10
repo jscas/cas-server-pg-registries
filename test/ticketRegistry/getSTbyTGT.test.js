@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('../nullLogger')
 
 const trPath = require.resolve('../../lib/ticketRegistry')
 
@@ -12,7 +10,7 @@ test('#getSTbyTGT empty array when none found', (t) => {
   const pool = {
     query () { return {rows: []} }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.getSTbyTGT(1)
     .then((sts) => {
       t.is(Array.isArray(sts), true)
@@ -26,7 +24,7 @@ test('#getSTbyTGT returns error on exception', (t) => {
   const pool = {
     query () { throw new Error('failed') }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.getSTbyTGT(1)
     .then(() => t.fail('should not happen'))
     .catch((err) => t.is(err.message, 'failed'))
@@ -50,7 +48,7 @@ test('#getSTbyTGT return tickets on success', (t) => {
       }
     }
   }
-  const tr = require(trPath)(pool, log, Promise)
+  const tr = require(trPath)(pool, log)
   tr.getSTbyTGT(1)
     .then((sts) => {
       t.is(Array.isArray(sts), true)

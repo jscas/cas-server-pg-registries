@@ -1,9 +1,7 @@
 'use strict'
 
 const test = require('tap').test
-const log = require('pino')({level: 'silent'})
-const Promise = require('bluebird')
-require('bluebird-co')
+const log = require('../nullLogger')
 
 const path = require.resolve('../../lib/ticketRegistry/getServices')
 
@@ -12,7 +10,7 @@ test('returns empty array on error', (t) => {
   const pool = {
     query () { throw new Error('failed') }
   }
-  const getServices = require(path)(pool, log, Promise)
+  const getServices = require(path)(pool, log)
   getServices(1)
     .then((services) => {
       t.is(Array.isArray(services), true)
@@ -26,7 +24,7 @@ test('returns empty array for none found', (t) => {
   const pool = {
     query () { return [] }
   }
-  const getServices = require(path)(pool, log, Promise)
+  const getServices = require(path)(pool, log)
   getServices(1)
     .then((services) => {
       t.is(Array.isArray(services), true)
