@@ -1,6 +1,6 @@
 'use strict'
 
-const fp = require('fp')
+const fp = require('fastify-plugin')
 const registryFactory = require('./lib/serviceRegistry')
 
 module.exports = fp(function serviceRegistryPlugin (server, options, next) {
