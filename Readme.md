@@ -1,20 +1,16 @@
-# pg-registries
+# jscas-pg-registries
 
-This plugin provides service and ticket registries for [JSCAS][jscas]. These
-registries are backed by a [PostgreSQL][psql] database.
+This plugin provides service and ticket registries for the [JSCAS][jscas server].
+These registries are backed by a [PostgreSQL][psql] database.
 
-[jscas]: https://github.com/jscas/cas-server
+[jscas]: https://github.com/jscas/jscas-server
 [psql]: https://www.postgresql.org/
 
 ## Requirements
 
-+ Expects [Bluebird][bluebird] to be the Promise object in the context
-+ Expects [Bluebird-co][bbco] handlers to be added to the Promise object
-+ [cas-server][cas-server] >= 0.11.0
++ [jscas-server][cas-server] >= 1.0.0
 
-[bluebird]: https://www.npmjs.com/package/bluebird
-[bbco]: https://www.npmjs.com/package/bluebird-co
-[cas-server]: https://github.com/jscas/cas-server
+[cas-server]: https://github.com/jscas/jscas-server
 
 ## Install
 
@@ -49,10 +45,10 @@ variables set to skip the questions:
 will be used.
 
 **Note:** if you have installed this module in a directory other than your
-`cas-server` install directory then you will need to explicitly install the
+`jscas-server` install directory then you will need to explicitly install the
 `pg` module: `npm install pg`. This module's schema installer requires a direct
 dependency on it. The regular operation of the module will use the one provided
-by `cas-server`.
+by `jscas-server`.
 
 Finally, you can start adding services to your database:
 
@@ -71,11 +67,11 @@ jscas=> \q
 
 ## Configuration
 
-Edit your `cas-server` settings file to:
+Edit your `jscas-server` settings file to:
 
 1. Include a `postgres` data source configuration for your database.
-2. Specify the service registry: `serviceRegistry: require('cas-server-pg-registries').serviceRegistry`
-3. Specify the ticket registry: `ticketRegistry: require('cas-server-pg-registries').ticketRegistry`
+2. Specify the service registry: `serviceRegistry: 'jscas-pg-registries>serviceRegistry'`
+3. Specify the ticket registry: `ticketRegistry: 'jscas-pg-registries>ticketRegistry'`
 
 ## Services
 
@@ -90,12 +86,6 @@ A service record has the following properties (columns):
   matched when `cas-server` is validating service authentication requests.
 + `comment` {text}: a user friendly snippet to describe the service and its
   purpose. May be used in management interfaces.
-+ `slo` {boolean}: enables, or disables, Single Logout support. If this is
-  set to `true`, then `slourl` must be set. Default: `false`.
-+ `slotype` {integer}: reserved for future use. This does not currently have
-  any effect.
-+ `slourl` {text}: must be set to the URL of the remote service that will
-  process logout requests when `slo` is set to `true`.
 
 [uuid-ossp]: https://www.postgresql.org/docs/current/static/uuid-ossp.html
 

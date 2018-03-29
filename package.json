@@ -1,5 +1,5 @@
 {
-  "name": "cas-server-pg-registries",
+  "name": "jscas-pg-registries",
   "version": "1.0.0-rc.2",
   "description": "Service and ticket registries backed by PostgreSQL",
   "main": "registries.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jscas/cas-server-pg-registries.git"
+    "url": "git+https://github.com/jscas/jscas-pg-registries.git"
   },
   "keywords": [
     "jscas",
@@ -28,9 +28,9 @@
   "author": "James Sumners <james.sumners@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jscas/cas-server-pg-registries/issues"
+    "url": "https://github.com/jscas/jscas-pg-registries/issues"
   },
-  "homepage": "https://github.com/jscas/cas-server-pg-registries#readme",
+  "homepage": "https://github.com/jscas/jscas-pg-registries#readme",
   "dependencies": {
     "cloob": "^1.0.0",
     "fastify-plugin": "^0.2.2",
