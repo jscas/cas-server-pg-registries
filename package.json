@@ -34,15 +34,15 @@
   "dependencies": {
     "cloob": "^1.0.0",
     "fastify-plugin": "^0.2.2",
-    "inquirer": "^5.1.0",
-    "js-joda": "^1.7.1",
+    "inquirer": "^5.2.0",
+    "js-joda": "^1.8.2",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
     "abstract-logging": "^1.0.0",
     "pre-commit": "^1.2.2",
     "snazzy": "^7.1.1",
-    "standard": "^11.0.0",
-    "tap": "^11.1.2"
+    "standard": "^11.0.1",
+    "tap": "^11.1.3"
   }
 }
