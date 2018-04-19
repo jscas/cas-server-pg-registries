@@ -103,6 +103,32 @@ test('#getServiceWithUrl should succeed for found service', (t) => {
     .catch((err) => t.threw(err))
 })
 
+test('#getServiceWithUrl should succeed for regex urls', (t) => {
+  t.plan(5)
+  const pool = {
+    query (sql) {
+      t.match(sql, /~ url/)
+      return {
+        rows: [{
+          id: 1,
+          name: 'foo',
+          comment: 'bar',
+          url: 'example.com'
+        }]
+      }
+    }
+  }
+  const sr = require(srPath)(pool, log, true)
+  sr.getServiceWithUrl('example.com')
+    .then((service) => {
+      t.is(service.id, 1)
+      t.is(service.name, 'foo')
+      t.is(service.comment, 'bar')
+      t.is(service.url, 'example.com')
+    })
+    .catch((err) => t.threw(err))
+})
+
 test('#close succeeds', (t) => {
   t.plan(1)
   const sr = require(srPath)({}, log)

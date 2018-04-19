@@ -73,6 +73,23 @@ Edit your `jscas-server` settings file to:
 2. Specify the service registry: `serviceRegistry: 'jscas-pg-registries>serviceRegistry'`
 3. Specify the ticket registry: `ticketRegistry: 'jscas-pg-registries>ticketRegistry'`
 
+### Service Registry Configuration
+
+The service registry plugin accepts configuration under via a plugins configuration
+key named `pgServiceRegistry`. The available configuration options are:
+
++ `useRegexUrls` (boolean, Default: `false`): when `true`, URLs stored in the
+`services` table are treated as regular expressions and incoming service URLs
+are matched against these regular expressions.
+  1. Any malformed regular expression in the table will cause *all* service
+  queries to fail.
+  2. See the [Postgres documentation](https://www.postgresql.org/docs/10/static/functions-matching.html#FUNCTIONS-POSIX-REGEXP)
+  for information on supported regular expression syntax (matches use the `~` operator).
+  3. It is imperitive that the stored regular expressions are written such that
+  matches will return a single result for incoming service URL tests.
+  4. Depending on the number of services stored, there may be a performance
+  penalty for using this feature.
+
 ## Services
 
 A service record has the following properties (columns):
